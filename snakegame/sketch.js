@@ -7,7 +7,6 @@ function setup(){
 	createCanvas(600, 600);
 	s = new Snake();
 	frameRate(10);
-	//food = createVector(random(width), random(height));
 	pickLocation();
 }
 
@@ -20,6 +19,9 @@ function pickLocation() {
 
 function draw(){
 	background(51);
+	fill(255);
+	text("Snake Points: " + s.total,10,10,100,70);
+	s.death();
 	s.update();
 	s.show();
 	if(s.eat(food)){
@@ -43,4 +45,8 @@ function keyPressed(){
 	else if(keyCode == RIGHT_ARROW){
 		s.dir(1,0);
 	}
+}
+
+function mousePressed(){
+	s.total++;
 }
