@@ -1,5 +1,6 @@
 var s;
 var scl = 20;
+var prevPress = "RIGHT";
 
 var food;
 
@@ -21,7 +22,9 @@ function draw(){
 	background(51);
 	fill(255);
 	text("Snake Points: " + s.total,10,10,100,70);
-	s.death();
+	if(s.death()){
+		callbackHelper(showScore);	
+	}
 	s.update();
 	s.show();
 	if(s.eat(food)){
@@ -33,20 +36,56 @@ function draw(){
 }
 
 function keyPressed(){
-	if(keyCode == UP_ARROW){
+	if(keyCode == UP_ARROW && prevPress != "DOWN"){
 		s.dir(0,-1);
+		prevPress = "UP";
 	}
-	else if(keyCode == DOWN_ARROW){
+	else if(keyCode == DOWN_ARROW && prevPress != "UP"){
 		s.dir(0,1);
+		prevPress = "DOWN";
 	}
-	else if(keyCode == LEFT_ARROW){
+	else if(keyCode == LEFT_ARROW && prevPress != "RIGHT"){
 		s.dir(-1,0);
+		prevPress = "LEFT";
 	}
-	else if(keyCode == RIGHT_ARROW){
+	else if(keyCode == RIGHT_ARROW && prevPress != "LEFT"){
 		s.dir(1,0);
+		prevPress = "RIGHT";
 	}
 }
 
 function mousePressed(){
+
+	/* Testing the growth of the snake on mousepress
 	s.total++;
+	*/
+	s.total++;
+}
+
+function showScore(){
+	$("#highScoreDialog").dialog({
+		dialogClass: "no-close",
+		modal: true,
+		buttons: [
+			{
+				text: "Save",
+				click: function(){
+					$(this.dialog("close"));
+				}
+			},
+			{
+				text: "Cancel",
+				click: function(){
+					$(this.dialog("close"));
+				}
+			}
+		]
+	});
+	$("#highScoreDialog").dialog("open");
+	callbackHelper
+}
+
+function callbackHelper(fnCallback){
+	fnCallback();
+	Console.log("Helped");
 }

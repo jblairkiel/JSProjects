@@ -6,6 +6,7 @@ function Snake() {
 	this.yspeed = 0;
 	this.total = 0;
 	this.tail = [];
+	this.justDied = false;
 
 	this.dir = function(x, y){
 		this.xspeed = x;
@@ -13,6 +14,7 @@ function Snake() {
 	}
 
 	this.update = function(){
+
 		if (this.total === this.tail.length){
 			for (var i = 0; i< this.total-1; i++){
 				this.tail[i] = this.tail[i+1];
@@ -24,8 +26,11 @@ function Snake() {
 		this.x = this.x + this.xspeed *scl;
 		this.y = this.y + this.yspeed *scl;
 
-		this.x = constrain(this.x, 0, width-scl);
-		this.y = constrain(this.y, 0, height-scl);
+		if(this.justDied){
+			this.x = constrain(this.x, 0, width-scl);
+			this.y = constrain(this.y, 0, height-scl);
+			this.justDied = false;
+		}
 
 	}
 
@@ -49,14 +54,39 @@ function Snake() {
 	}
 
 	this.death = function(){
-		for (var i=0; i< this.tail.length; i++){
-			var pos = this.tail[i];
-			var d = dist(this.x, this.y, pos.x, pos.y);
-			if (d<1){
-				alert("Starting over");
+		if(this.tail.length < 0){
+			for (var i=0; i< this.tail.length; i++){
+				var pos = this.tail[i];
+				var d = dist(this.x, this.y, pos.x, pos.y);
+				if (d<1 || (this.x < 0) || (this.x > width-scl) || (this.y < 0) || (this.x > height-scl)){
+					//High score
+					this.dir(1,0);
+					this.x = 0;
+					this.y = 0;
+					this.total = 0;
+					this.tail = [];
+					this.justDied = true;
+					return true;
+				}
+
+			}
+			return false;
+		}
+		else{
+			if ((this.x < 0) || (this.x > width-scl) || (this.y < 0) || (this.x > height-scl)){
+				//High score
+				this.dir(1,0);
+				this.x = 0;
+				this.y = 0;
 				this.total = 0;
 				this.tail = [];
+				this.justDied = true;
+				return true;
+			}
+			else{
+				return false;
 			}
 		}
+	
 	}
 }
