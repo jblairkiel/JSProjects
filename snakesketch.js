@@ -23,7 +23,7 @@ function draw(){
 	fill(255);
 	text("Snake Points: " + s.total,10,10,100,70);
 	if(s.death()){
-		callbackHelper(showScore);	
+		showScore();	
 	}
 	s.update();
 	s.show();
@@ -63,6 +63,7 @@ function mousePressed(){
 }
 
 function showScore(){
+	s.dir(0,0);
 	$("#highScoreDialog").dialog({
 		dialogClass: "no-close",
 		modal: true,
@@ -71,6 +72,7 @@ function showScore(){
 			text: "Save",
 			click: function(){
 				$(this).dialog("close");
+				
 				}
 			},
 			{
@@ -81,11 +83,5 @@ function showScore(){
 			}
 		]
 	});
-	$("#highScoreDialog").dialog("open");
-	callbackHelper
-}
-
-function callbackHelper(fnCallback){
-	fnCallback();
 }
 

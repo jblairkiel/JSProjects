@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<style>
-		$(function (){
-			$("#highScoreDialog").dialog({autoOpen: false});
-			$("#uiButton").button();
-		});
+		$("#highScoreDialog").dialog({autoOpen: true});
+		$("#spinButton").button("option", "clases.ui-button", "highlight");
 	</style>
 	<head>
 		<meta charset="UTF-8">
@@ -14,8 +12,8 @@
 		<script src="assets/jquery-ui.js" type="text/javascript"></script>
 		<script src="assets/p5.js" type="text/javascript"></script>
 		<script src="assets/p5.dom.js" type="text/javascript"></script>
-		<script src="snake.js" type="text/javascript"></script>
-		<script src="snakesketch.js" type="text/javascript"></script>
+		<script src="spinner.js" type="text/javascript"></script>
+		<script src="resturantsketch.js" type="text/javascript"></script>
 
 		<link href="assets/jquery-ui.theme.css" rel="stylesheet">
 		<link href="assets/jquery-ui.css" rel="stylesheet">
@@ -23,6 +21,7 @@
 	</head>
 	<body>
 		<div id="highScoreDialog" title="High Score"><p></p></div>
-		<button class="uiButton"></button>
+		</br>
+		<button class="spinButton" onclick='s.spin()'>Spin</button>
 	</body>
 </html>
